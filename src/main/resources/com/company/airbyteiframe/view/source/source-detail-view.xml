@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<view xmlns="http://jmix.io/schema/flowui/view"
+      title="msg://sourceDetailView.title">
+    <data>
+        <instance id="sourceDc"
+                  class="com.company.airbyteiframe.entity.Source">
+            <fetchPlan extends="_base"/>
+            <loader id="sourceDl"/>
+        </instance>
+    </data>
+    <facets>
+        <dataLoadCoordinator auto="true"/>
+    </facets>
+    <actions>
+    </actions>
+    <layout>
+        <iframe id="airbyteFrame"
+                width="100%" height="100%"
+                css="border: unset;"
+                resource="http://localhost:3000/workspaces/fba7cc07-72e6-487d-b82a-1368de8d8f29/source/new-source"/>
+    </layout>
+</view>
+

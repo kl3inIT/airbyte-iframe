@@ -4,6 +4,7 @@
     <menu id="application" title="msg://com.company.airbyteiframe/menu.application.title" opened="true">
         <item view="User.list" title="msg://com.company.airbyteiframe.view.user/UserListView.title"/>
         <item view="IframeTest" title="msg://com.company.airbyteiframe.view.iframetest/iframeTest.title"/>
+        <item view="Source.list" title="msg://com.company.airbyteiframe.view.source/sourceListView.title"/>
     </menu>
 
 </menu-config>

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<view xmlns="http://jmix.io/schema/flowui/view"
+      xmlns:c="http://jmix.io/schema/flowui/jpql-condition"
+      title="msg://sourceListView.title"
+      focusComponent="sourcesDataGrid">
+    <data>
+        <collection id="sourcesDc"
+                    class="com.company.airbyteiframe.entity.Source">
+            <fetchPlan extends="_base"/>
+            <loader id="sourcesDl" readOnly="true">
+                <query>
+                    <![CDATA[select e from Source e]]>
+                </query>
+            </loader>
+        </collection>
+    </data>
+    <facets>
+        <dataLoadCoordinator auto="true"/>
+        <urlQueryParameters>
+            <genericFilter component="genericFilter"/>
+            <pagination component="pagination"/>
+        </urlQueryParameters>
+    </facets>
+    <actions>
+        <action id="selectAction" type="lookup_select"/>
+        <action id="discardAction" type="lookup_discard"/>
+    </actions>
+    <layout>
+        <genericFilter id="genericFilter"
+                       dataLoader="sourcesDl">
+            <properties include=".*"/>
+        </genericFilter>
+        <hbox id="buttonsPanel" classNames="buttons-panel">
+            <button id="createButton" action="sourcesDataGrid.createAction" themeNames="primary, error" />
+            <button id="editButton" action="sourcesDataGrid.editAction"/>
+            <button id="removeButton" action="sourcesDataGrid.removeAction"/>
+            <simplePagination id="pagination" dataLoader="sourcesDl"/>
+        </hbox>
+        <dataGrid id="sourcesDataGrid"
+                  width="100%"
+                  minHeight="20em"
+                  dataContainer="sourcesDc"
+                  columnReorderingAllowed="true">
+            <actions>
+                <action id="createAction" type="list_create"/>
+                <action id="editAction" type="list_edit"/>
+                <action id="removeAction" type="list_remove"/>
+            </actions>
+            <columns resizable="true">
+                <column property="name"/>
+                <column property="sourceType"/>
+                <column property="providerUnit"/>
+                <column property="createdDate"/>
+                <column property="sourceId"/>
+            </columns>
+        </dataGrid>
+        <hbox id="lookupActions" visible="false">
+            <button id="selectButton" action="selectAction"/>
+            <button id="discardButton" action="discardAction"/>
+        </hbox>
+    </layout>
+</view>

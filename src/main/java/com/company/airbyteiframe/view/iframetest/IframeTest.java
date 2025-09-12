@@ -31,25 +31,24 @@ public class IframeTest extends StandardView {
 
     @Subscribe
     public void onInit(final InitEvent event) {
-        airbyteFrame.setId("airbyteFrame");
         UI.getCurrent().getPage().executeJs(
                 """
                         (function(frameId, allowedOrigin){
                           const frame = document.getElementById(frameId);
                           if (!frame) return;
-                        
+
                           // chống đăng ký trùng (dev/HMR)
                           window._airbyteBridge = window._airbyteBridge || {};
                           if (window._airbyteBridge[frameId]) return;
                           window._airbyteBridge[frameId] = true;
-                        
+
                           window.addEventListener('message', function(ev){
                             // Chỉ nhận message đến từ đúng iframe này
                             if (!frame.contentWindow || ev.source !== frame.contentWindow) return;
-                        
+
                             // Siết origin nếu cấu hình
                             if (allowedOrigin && allowedOrigin !== '*' && ev.origin !== allowedOrigin) return;
-                        
+
                             const data = ev.data || {};
                             const detail = {
                               origin: ev.origin || '',
