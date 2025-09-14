@@ -4,6 +4,7 @@ import com.company.airbyteiframe.entity.Source;
 import com.company.airbyteiframe.view.main.MainView;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.vaadin.flow.component.DetachEvent;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.html.IFrame;
 import com.vaadin.flow.component.notification.Notification;
@@ -185,5 +186,20 @@ public class SourceDetailView extends StandardDetailView<Source> {
             sb.append(p);
         }
         return sb.toString();
+    }
+
+    @Subscribe
+    public void onDetachEvent(final DetachEvent event) {
+        // Cleanup message listener khi view bị destroy
+        UI.getCurrent().getPage().executeJs(
+                """
+                (function(frameId){
+                  if (window._airbyteBridge && window._airbyteBridge[frameId]) {
+                    delete window._airbyteBridge[frameId];
+                  }
+                })($0);
+                """,
+                airbyteFrame.getId().orElse("airbyteFrame")
+        );
     }
 }
