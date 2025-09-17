@@ -32,7 +32,7 @@ public class SourceDetailView extends StandardDetailView<Source> {
     private IFrame airbyteFrame;
 
     // === Cấu hình Airbyte (DEV) ===
-    private static final String WORKSPACE_ID = "eb9e7f02-519f-403f-bf95-13c5c7d18bed";
+    private static final String WORKSPACE_ID = "c8b2eb0b-b200-4e7c-b601-05b08b86e140";
     private static final String AIRBYTE_ORIGIN = "http://localhost:3000";
     private static final String AIRBYTE_BASE = AIRBYTE_ORIGIN + "/workspaces/" + WORKSPACE_ID;
     @Autowired

@@ -17,7 +17,7 @@
         <iframe id="airbyteFrame"
                 width="100%" height="100%"
                 css="border: unset;"
-                resource="http://localhost:3000/workspaces/eb9e7f02-519f-403f-bf95-13c5c7d18bed/source/new-source"/>
+                resource="http://localhost:3000/workspaces/c8b2eb0b-b200-4e7c-b601-05b08b86e140/source/new-source"/>
     </layout>
 </view>
 

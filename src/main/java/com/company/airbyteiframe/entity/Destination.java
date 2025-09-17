@@ -15,8 +15,6 @@ public class Destination extends BaseEntity {
     @Column(name = "DESTINATION_TYPE")
     private String destinationType;
 
-    @Column(name = "PROVIDER_UNIT")
-    private String providerUnit;
 
     public void setDestinationId(String destinationId) {
         this.destinationId = destinationId;
@@ -32,14 +30,6 @@ public class Destination extends BaseEntity {
 
     public void setDestinationType(String destinationType) {
         this.destinationType = destinationType;
-    }
-
-    public ProviderUnit getProviderUnit() {
-        return providerUnit == null ? null : ProviderUnit.fromId(providerUnit);
-    }
-
-    public void setProviderUnit(ProviderUnit providerUnit) {
-        this.providerUnit = providerUnit == null ? null : providerUnit.getId();
     }
 
 }

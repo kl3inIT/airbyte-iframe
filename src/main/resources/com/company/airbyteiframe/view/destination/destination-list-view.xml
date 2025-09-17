@@ -49,7 +49,6 @@
             <columns resizable="true">
                 <column property="name"/>
                 <column property="destinationType"/>
-                <column property="providerUnit"/>
                 <column property="createdDate"/>
                 <column property="destinationId"/>
             </columns>

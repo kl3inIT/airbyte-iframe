@@ -30,7 +30,7 @@ public class DestinationDetailView extends StandardDetailView<Destination> {
     @ViewComponent
     private IFrame airbyteFrame;
 
-    private static final String WORKSPACE_ID = "eb9e7f02-519f-403f-bf95-13c5c7d18bed";
+    private static final String WORKSPACE_ID = "c8b2eb0b-b200-4e7c-b601-05b08b86e140";
     private static final String AIRBYTE_ORIGIN = "http://localhost:3000";
     private static final String AIRBYTE_BASE = AIRBYTE_ORIGIN + "/workspaces/" + WORKSPACE_ID;
     @Autowired
@@ -55,46 +55,46 @@ public class DestinationDetailView extends StandardDetailView<Destination> {
     public void onReady(final ReadyEvent event) {
         UI.getCurrent().getPage().executeJs(
                 """
-                        (function(frame, allowedOriginParam){
-                          if (!frame) return;
-                        
-                          1) Dedupe theo ELEMENT, không theo id chuỗi
-                          window._airbyteBridge = window._airbyteBridge || new WeakMap();
-                          if (window._airbyteBridge.has(frame)) return;
-                        
-                          2) Origin: nếu không truyền, tự lấy từ frame.src cho đúng port
-                          const allowedOrigin = (allowedOriginParam && allowedOriginParam !== '*')
-                            ? allowedOriginParam
-                            : (function(){ try { return new URL(frame.src).origin; } catch(e) { return ''; } })();
-                        
-                          const handler = function(ev){
-                            if (!frame.contentWindow || ev.source !== frame.contentWindow) return;
-                            if (allowedOrigin && ev.origin !== allowedOrigin) return;
-                        
-                            const data = ev.data || {};
-                            const detail = {
-                              origin: ev.origin || '',
-                              type: data.type || '',
-                              payload: (typeof data.payload === 'string') ? data.payload : JSON.stringify(data.payload || {})
-                            };
-                            frame.dispatchEvent(new CustomEvent('airbyte-message', { detail }));
-                          };
-                        
-                          window.addEventListener('message', handler);
-                          window._airbyteBridge.set(frame, handler);
-                        
-                          3) Cleanup tự động khi iframe bị gỡ khỏi DOM (tránh rò rỉ + stale ref)
-                          const obs = new MutationObserver(() => {
-                            if (!document.body.contains(frame)) {
-                              const h = window._airbyteBridge.get(frame);
-                              if (h) window.removeEventListener('message', h);
-                              window._airbyteBridge.delete(frame);
-                              obs.disconnect();
-                            }
-                          });
-                          obs.observe(document.body, { childList: true, subtree: true });
-                        })($0, $1);
-                        """,
+                (function(frame, allowedOriginParam){
+                  if (!frame) return;
+              
+                  // 1) Dedupe theo ELEMENT, không theo id chuỗi
+                  window._airbyteBridge = window._airbyteBridge || new WeakMap();
+                  if (window._airbyteBridge.has(frame)) return;
+              
+                  // 2) Origin: nếu không truyền, tự lấy từ frame.src cho đúng port
+                  const allowedOrigin = (allowedOriginParam && allowedOriginParam !== '*')
+                    ? allowedOriginParam
+                    : (function(){ try { return new URL(frame.src).origin; } catch(e) { return ''; } })();
+              
+                  const handler = function(ev){
+                    if (!frame.contentWindow || ev.source !== frame.contentWindow) return;
+                    if (allowedOrigin && ev.origin !== allowedOrigin) return;
+              
+                    const data = ev.data || {};
+                    const detail = {
+                      origin: ev.origin || '',
+                      type: data.type || '',
+                      payload: (typeof data.payload === 'string') ? data.payload : JSON.stringify(data.payload || {})
+                    };
+                    frame.dispatchEvent(new CustomEvent('airbyte-message', { detail }));
+                  };
+              
+                  window.addEventListener('message', handler);
+                  window._airbyteBridge.set(frame, handler);
+              
+                  // 3) Cleanup tự động khi iframe bị gỡ khỏi DOM (tránh rò rỉ + stale ref)
+                  const obs = new MutationObserver(() => {
+                    if (!document.body.contains(frame)) {
+                      const h = window._airbyteBridge.get(frame);
+                      if (h) window.removeEventListener('message', h);
+                      window._airbyteBridge.delete(frame);
+                      obs.disconnect();
+                    }
+                  });
+                  obs.observe(document.body, { childList: true, subtree: true });
+                })($0, $1);
+                """,
                 airbyteFrame.getElement(),
                 AIRBYTE_ORIGIN
         );
